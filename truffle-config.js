@@ -46,6 +46,7 @@
 
 // const HDWalletProvider = require('@truffle/hdwallet-provider');
 
+const HDWalletProvider = require("@truffle/hdwallet-provider");
 module.exports = {
   /**
    * Networks define how you connect to your ethereum client and let you set the
@@ -56,6 +57,11 @@ module.exports = {
    *
    * $ truffle test --network <network-name>
    */
+
+  dashboard: {
+    port: 25012,
+    host: "localhost"
+  },
 
   networks: {
     development: {
@@ -74,6 +80,18 @@ module.exports = {
       confirmations: 10,
       timeoutBlocks: 200,
       skipDryRun: false
+    },
+    arbitron: {
+        provider: () => new HDWalletProvider(process.env.privatekey, `https://arb-mainnet.g.alchemy.com/v2/GYO_0E2IiivZqtrcK0oo-7_GGEk2Q-Rd`),
+        network_id: 42161,
+        confirmations: 2,
+        timeoutBlocks: 200
+    },
+    polygon: {
+        provider: () => new HDWalletProvider(process.env.privatekey, `https://polygon-mainnet.g.alchemy.com/v2/lJCa9X4ST5ilyIUv9ZyXned2JN1myyhl`),
+        network_id: 137,
+        confirmations: 2,
+        timeoutBlocks: 200
     },
     production: {}
   },

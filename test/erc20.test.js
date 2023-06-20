@@ -23,15 +23,15 @@ contract('ERC20', function (accounts) {
 
     before(async function () {
         factory = await DvTokenFactory.new();
-        await factory.setHost(accounts[2], { from: accounts[0] });
-        await factory.setFee(1000, { from: accounts[2] });
+        await factory.setRecipient(accounts[2], { from: accounts[0] });
+        await factory.setFee(1000, 1000, { from: accounts[0] });
     });
 
     beforeEach(async function () {
         const t = await factory.issue(name, symbol, 10, initialSupply, { from: accounts[0], value: 100000 });
         this.token = await DvToken.at(t.receipt.rawLogs[0].address);
-        await this.token.setTax(10, { from: accounts[0] });
-        await this.token.setBeneficiary(accounts[2], { from: accounts[0] });
+        await this.token.setRoyalty(10, { from: accounts[0] });
+        await this.token.setRoyaltyReceiver(accounts[2], { from: accounts[0] });
     });
 
     it('has a name', async function () {

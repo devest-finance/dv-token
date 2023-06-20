@@ -6,13 +6,13 @@ module.exports = function(deployer) {
       deployer.deploy(DvTokenFactory)
           .then(() => DvTokenFactory.deployed())
           .then(async _instance => {
-                await _instance.setFee(1000000000);
+                await _instance.setFee(10000000, 1000000000);
           });
-  } else if(deployer.network == "testnet") {
+  } else {
       deployer.deploy(DvTokenFactory)
           .then(() => DvTokenFactory.deployed())
           .then(async _instance => {
-              await _instance.setFee(1000000000);
+              await _instance.setFee(10000000, 10000000);
           });
   }
 };

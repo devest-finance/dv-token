@@ -1,11 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.12;
 
-import "@openzeppelin/contracts/token/ERC20/presets/ERC20PresetFixedSupply.sol";
+import "./DeVest.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "./OwnableRevenue.sol";
 
-contract DvToken is ERC20, OwnableRevenue {
+contract DvToken is ERC20, DeVest {
 
     uint8 private _decimals;
 
@@ -14,8 +13,8 @@ contract DvToken is ERC20, OwnableRevenue {
      *
      * See {ERC20-constructor}.
      */
-    constructor(string memory name, string memory symbol, uint8 __decimals, uint256 initialSupply, address owner)
-        ERC20(name, symbol) OwnableRevenue(owner) {
+    constructor(string memory name, string memory symbol, uint8 __decimals, uint256 initialSupply, address owner, address _factory)
+        ERC20(name, symbol) DeVest(owner, _factory) {
         _decimals = __decimals;
         _mint(owner, initialSupply);
     }
@@ -29,10 +28,10 @@ contract DvToken is ERC20, OwnableRevenue {
         address owner = _msgSender();
 
         // calculate tax and transfer
-        uint256 tax = (amount * _tax) / 1000;
-        _transfer(owner, _beneficiary, tax);
+        uint256 royalty = (amount * _royalty) / 1000;
+        _transfer(owner, _royaltyRecipient, royalty);
 
-        _transfer(owner, to, amount-tax);
+        _transfer(owner, to, amount-royalty);
         return true;
     }
 
