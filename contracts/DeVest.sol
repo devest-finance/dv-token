@@ -64,19 +64,13 @@ contract DeVest is Context {
         payable(recipient).transfer(fee);
         _;
     }
-    
+
     /**
-     * @dev set the native royalty, only owner
+     * @dev set the native royalty and beneficiary, only owner
      */
-    function setRoyalty(uint256 __royalty) public onlyOwner {
+    function setRoyalties(uint256 __royalty, address __royaltyRecipient) public payable takeFee onlyOwner {
         require(__royalty >= 0 && __royalty <= 1000, 'E5');
         _royalty = __royalty;
-    }
-
-    /*
-     * Set the royalty beneficiary address, only owner
-     */
-    function setRoyaltyReceiver(address __royaltyRecipient) public onlyOwner {
         _royaltyRecipient = __royaltyRecipient;
     }
 
