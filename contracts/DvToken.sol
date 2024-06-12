@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.12;
 
-import "./DeVest.sol";
+import "@devest/contracts/DeVest.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 contract DvToken is ERC20, DeVest {
@@ -13,8 +13,9 @@ contract DvToken is ERC20, DeVest {
      *
      * See {ERC20-constructor}.
      */
-    constructor(string memory name, string memory symbol, uint8 __decimals, uint256 initialSupply, address owner, address _factory)
+    constructor(string memory name, string memory symbol, uint8 __decimals, uint256 initialSupply, address _factory, address owner)
         ERC20(name, symbol) DeVest(owner, _factory) {
+        require(__decimals >= 0 && __decimals <= 18, "DvToken: decimals must be less than or equal to 18");
         _decimals = __decimals;
         _mint(owner, initialSupply);
     }
@@ -25,6 +26,7 @@ contract DvToken is ERC20, DeVest {
      * Override transfer function and add tax contribution
      */
     function transfer(address to, uint256 amount) public virtual override returns (bool) {
+        require(amount >= _royalty, "Ensure the amount is greater than royalty taken");
         address owner = _msgSender();
 
         // calculate tax and transfer

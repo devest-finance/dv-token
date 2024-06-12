@@ -20,21 +20,19 @@
   },
   "homepage": "https://github.com/devest-finance/dv-token#readme",
   "dependencies": {
-    "@matterlabs/hardhat-zksync-deploy": "^0.6.3",
-    "@matterlabs/hardhat-zksync-solc": "^0.4.1",
-    "@matterlabs/hardhat-zksync-verify": "^0.2.0",
+    "@devest/contracts": "1.2.2",
     "@openzeppelin/contracts": "4.9.3",
     "@openzeppelin/test-helpers": "0.5.16",
     "@truffle/hdwallet-provider": "2.1.13",
     "bintrees": "1.0.2",
     "dotenv": "16.3.1",
-    "ganache": "7.9.0",
     "hardhat": "2.17.1",
     "num": "0.3.0",
-    "truffle-contract-size": "2.0.1",
-    "ts-node": "10.9.1",
-    "typescript": "5.1.6",
-    "web3": "4.1.0",
-    "zksync-web3": "0.14.3"
+    "web3": "4.1.0"
+  },
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.2.3",
+    "@nomiclabs/hardhat-waffle": "^2.0.6",
+    "hardhat": "^2.22.2"
   }
 }
